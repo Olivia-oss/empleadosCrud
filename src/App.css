@@ -1,0 +1,12 @@
+img {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    width: 250px;
+  }
+  
+  .titulo{
+    font-family: 'Britannic Bold';
+    font-size: 60px;
+    text-decoration: underline;
+  }
