@@ -14,17 +14,16 @@ state = {
   modalInsertar:false,
   modalEliminar:false,
   form:{
-    fotografia: '',
-    nombre:'',
-    edad:'',
-    sexo:'',
-    salario:''
+    img: '',
+    title:'',
+    desc:'',
+    price:'',
   },
   clave:''
 }
 
 handleChangeImg = () =>{
-  let name="fotografia";
+  let name="img";
   let value=document.getElementById(name).files[0];
 
   this.setState({form: {
@@ -34,7 +33,7 @@ handleChangeImg = () =>{
 }
 
 peticionesGet = () => {
-  firebase.child('empleados').on('value', empleado => {
+  firebase.child('product').on('value', empleado => {
     if(empleado.val() !== null){
       this.setState({...this.state.data, data:empleado.val()})
     }else{
@@ -48,7 +47,7 @@ componentDidMount(){
 }
 
 peticionPost = () =>{
-  firebase.child("empleados").push(this.state.form,
+  firebase.child("product").push(this.state.form,
     error => {
       if(error) console.log(error);
     })
@@ -56,7 +55,7 @@ peticionPost = () =>{
 }
 
 peticionPut = () =>{
-  firebase.child(`empleados/${this.state.clave}`).set(
+  firebase.child(`product/${this.state.clave}`).set(
     this.state.form,
     error =>{
       if(error)console.log(error);
@@ -66,7 +65,7 @@ peticionPut = () =>{
 }
 
 peticionDelete = () =>{
-  firebase.child(`empleados/${this.state.clave}`).remove(
+  firebase.child(`product/${this.state.clave}`).remove(
     error => {
       if(error)console.log(error);
     }
@@ -110,11 +109,10 @@ seleccionarEmpleado = async(empleado, clave, caso) =>{
           <thead className="table-dark">
             <tr>
             <th>CLAVE</th>
-            <th>FOTOGRAFIA</th>
-            <th>NOMBRE</th>
-            <th>EDAD</th>
-            <th>SEXO</th>
-            <th>SALARIO</th>
+            <th>IMAGEN</th>
+            <th>TITUTO</th>
+            <th>DESCRIPCION</th>
+            <th>PRECIO</th>
             <th>ACCIONES</th>
             </tr>
           </thead>
@@ -123,11 +121,10 @@ seleccionarEmpleado = async(empleado, clave, caso) =>{
             Object.keys(this.state.data).map(i=>(
               <tr key={i} >
                 <td>{i}</td>
-                <td><img src={this.state.data[i].fotografia}></img></td>
-                 <td>{this.state.data[i].nombre}</td>
-                <td>{this.state.data[i].edad}</td>
-                <td>{this.state.data[i].sexo}</td>
-                <td>{this.state.data[i].salario}</td>
+                <td><img src={this.state.data[i].img}></img></td>
+                 <td>{this.state.data[i].title}</td>
+                <td>{this.state.data[i].desc}</td>
+                <td>{this.state.data[i].price}</td>
                 <td>
                   <button className="btn btn-warning m-2" onClick={()=>this.seleccionarEmpleado(this.state.data[i],i,"Editar")}>Editar📝</button>
                   <button className="btn btn-danger" onClick={()=>this.seleccionarEmpleado(this.state.data[i],i,"Eliminar")}>Eliminar🗑️</button></td>
@@ -155,52 +152,44 @@ seleccionarEmpleado = async(empleado, clave, caso) =>{
               />
               <br />
   
-              <label>Fotografia</label>
+              <label>Imagen</label>
               <input
                 className="form-control"
-                id="fotografia"
-                type="file"
-                name="fotografia"
-                onChange={this.handleChangeImg}
+                id="img"
+                type="text"
+                name="img"
+                onChange={this.handleChange}
               />
               <br />
   
-              <label>Nombre</label>
+              <label>Titulo</label>
               <input
                 className="form-control"
                 type="text"
-                name="nombre"
-                value={this.state.form?this.state.form.nombre:''}
+                name="title"
+                value={this.state.form?this.state.form.title:''}
                 onChange={this.handleChange}
               />
               <br />
-              <label>Edad</label>
-              <input
-                className="form-control"
-                type="number"
-                name="edad"
-                value={this.state.form?this.state.form.edad:''}
-                onChange={this.handleChange}
-              />
-              <br />
-              <label>Sexo</label>
+              <label>Descripcion</label>
               <input
                 className="form-control"
                 type="text"
-                name="sexo"
-                value={this.state.form?this.state.form.sexo:''}
+                name="desc"
+                value={this.state.form?this.state.form.desc:''}
                 onChange={this.handleChange}
               />
               <br />
-              <label>Salario</label>
+              <label>Precio</label>
               <input
                 className="form-control"
                 type="number"
-                name="salario"
-                value={this.state.form?this.state.form.salario:''}
+                name="price"
+                value={this.state.form?this.state.form.price:''}
                 onChange={this.handleChange}
               />
               <br />
+             
             </div>
           </ModalBody>
           <ModalFooter>
@@ -217,7 +206,7 @@ seleccionarEmpleado = async(empleado, clave, caso) =>{
   
         <Modal isOpen={this.state.modalEliminar}>
           <ModalBody>
-            Estás Seguro que deseas eliminar el registro {this.state.form && this.state.form.nombre}
+            Estás Seguro que deseas eliminar el registro {this.state.form && this.state.form.title}
           </ModalBody>
           <ModalFooter>
             <button className="btn btn-danger" onClick={()=>this.peticionDelete()}>
@@ -240,52 +229,44 @@ seleccionarEmpleado = async(empleado, clave, caso) =>{
           </ModalHeader>
           <ModalBody>
             <div className="form-group">  
-            <label>Fotografia</label>
+            <label>Imagen</label>
               <input
                 className="form-control"
-                type="file"
-                id="fotografia"
-                name="fotografia"
-                onChange={this.handleChangeImg}
+                id="img"
+                type="text"
+                name="img"
+                onChange={this.handleChange}
               />
               <br />
   
-              <label>Nombre</label>
+              <label>Titulo</label>
               <input
                 className="form-control"
                 type="text"
-                name="nombre"
+                name="title"
                 value={this.state.form && this.state.form.nombre}
                 onChange={this.handleChange}
               />
               <br />
-              <label>Edad</label>
+              <label>Descripcion</label>
               <input
                 className="form-control"
-                type="number"
-                name="edad"
+                type="text"
+                name="desc"
                 value={this.state.form && this.state.form.edad}
                 onChange={this.handleChange}
               />
               <br />
-              <label>Sexo</label>
+              <label>Precio</label>
               <input
                 className="form-control"
-                type="text"
-                name="sexo"
+                type="number"
+                name="price"
                 value={this.state.form && this.state.form.sexo}
                 onChange={this.handleChange}
               />
               <br />
-              <label>Salario</label>
-              <input
-                className="form-control"
-                type="number"
-                name="salario"
-                value={this.state.form && this.state.form.salario}
-                onChange={this.handleChange}
-              />
-              <br />
+             
             </div>
           </ModalBody>
           <ModalFooter>

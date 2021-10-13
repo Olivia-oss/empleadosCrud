@@ -6,12 +6,12 @@ import firebase from 'firebase'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyC5gPJ0ADfec8QF1aC39aMRlaY4gfzN99w",
-    authDomain: "crudempleados-29542.firebaseapp.com",
-    projectId: "crudempleados-29542",
-    storageBucket: "crudempleados-29542.appspot.com",
-    messagingSenderId: "57070023107",
-    appId: "1:57070023107:web:7f4223ce3607734aaa8d76"
+  apiKey: "AIzaSyC1wugZyf5Engx7s9Z2VpduGM2KpRuI7JQ",
+  authDomain: "carrito-9e334.firebaseapp.com",
+  projectId: "carrito-9e334",
+  storageBucket: "carrito-9e334.appspot.com",
+  messagingSenderId: "420164951199",
+  appId: "1:420164951199:web:68ad68d0c4b866d1d4d6aa"
   };
 
 // Initialize Firebase
